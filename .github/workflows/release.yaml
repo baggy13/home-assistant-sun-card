@@ -1,0 +1,39 @@
+name: Release
+
+on:
+  release:
+    types: [published]
+
+jobs:
+  release:
+    name: Prepare release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Make slug values available
+        uses: gacts/github-slug@v1
+        id: slug
+
+      - name: Build the file
+        run: |
+          cd /home/runner/work/home-assistant-sun-card/home-assistant-sun-card
+          yarn install
+          yarn version --no-git-tag-version --new-version ${{ steps.slug.outputs.version }}
+          yarn build
+
+      - name: Upload zip to release
+        uses: svenstaro/upload-release-action@v1-release
+
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: /home/runner/work/home-assistant-sun-card/home-assistant-sun-card/dist/home-assistant-sun-card.js
+          asset_name: home-assistant-sun-card.js
+          tag: ${{ github.ref }}
+          overwrite: true
+
+      - name: Verify HACS compliance
+        uses: hacs/action@main
+        with:
+          category: plugin
