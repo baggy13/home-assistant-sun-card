@@ -3,6 +3,7 @@ export type TSunCardConfig = {
   language?: string
   showAzimuth?: boolean
   showElevation?: boolean
+  showDetails?: boolean
   timeFormat?: '12h' | '24h'
   title?: string
 }

@@ -21,6 +21,7 @@ export class Constants {
     language: 'en',
     showAzimuth: false,
     showElevation: false,
+    showDetails: true,
     timeFormat: '24h'
   }
 

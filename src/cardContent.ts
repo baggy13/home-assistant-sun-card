@@ -97,8 +97,8 @@ export class SunCardContent {
   }
 
   private static generateFooter (data: TSunCardData, localization: TSunCardTexts, config: TSunCardConfig): TemplateResult {
-    const upperRow = html`
-      <div class="sun-card-footer-row">
+    const upperRow = config.showDetails ? html`
+        <div class="sun-card-footer-row">
         <div class="sun-card-text-container">
           <span class="sun-card-text-subtitle">${localization.Dawn}</span>
           ${data?.times.dawn ? this.generateTime(data.times.dawn) : ''}
@@ -112,7 +112,7 @@ export class SunCardContent {
           ${data?.times.dusk ? this.generateTime(data.times.dusk) : ''}
         </div>
       </div>
-    `
+    ` : html``
 
     let bottomRow = html``
     if (config.showAzimuth || config.showElevation) {
